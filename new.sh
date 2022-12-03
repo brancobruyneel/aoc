@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 YEAR=$(date "+%Y")
 MONTH=$(date "+%-m")
 DAY=$(date "+%d")
