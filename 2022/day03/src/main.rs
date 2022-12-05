@@ -1,5 +1,23 @@
-fn part_one(input: &str) -> u32 {
-    0
+fn part_one(input: &str) -> i16 {
+    input
+        .lines()
+        .map(|line| line.split_at(line.len() / 2))
+        .map(|(left, right)| {
+            left.chars()
+                .filter(|l| right.contains(*l))
+                .map(|l| {
+                    let byte = l as u8;
+
+                    if byte >= b'a' {
+                        (byte - b'a') as i16 + 1
+                    } else {
+                        (byte - b'A') as i16 + 27
+                    }
+                })
+                .next()
+                .unwrap()
+        })
+        .sum::<i16>()
 }
 
 fn part_two(input: &str) -> u32 {
@@ -17,11 +35,16 @@ fn main() {
 mod tests {
     use super::*;
 
-    const EXAMPLE: &str = "";
+    const EXAMPLE: &str = "vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw";
 
     #[test]
     fn part_one_works() {
-        assert_eq!(part_one(EXAMPLE), 0);
+        assert_eq!(part_one(EXAMPLE), 157);
     }
 
     #[test]
