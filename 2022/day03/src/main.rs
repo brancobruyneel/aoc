@@ -1,8 +1,9 @@
 fn part_one(input: &str) -> i16 {
     input
         .lines()
-        .map(|line| line.split_at(line.len() / 2))
-        .map(|(left, right)| {
+        .map(|line| {
+            let (left, right) = line.split_at(line.len() / 2);
+
             left.chars()
                 .filter(|l| right.contains(*l))
                 .map(|l| {
@@ -20,8 +21,26 @@ fn part_one(input: &str) -> i16 {
         .sum::<i16>()
 }
 
-fn part_two(input: &str) -> u32 {
-    0
+fn part_two(input: &str) -> i16 {
+    input
+        .lines()
+        .collect::<Vec<_>>()
+        .chunks(3)
+        .map(|lines| {
+            let common_type = lines[0]
+                .chars()
+                .find(|c| lines[1].contains(*c) && lines[2].contains(*c))
+                .unwrap();
+
+            let byte = common_type as u8;
+
+            if byte >= b'a' {
+                (byte - b'a') as i16 + 1
+            } else {
+                (byte - b'A') as i16 + 27
+            }
+        })
+        .sum::<i16>()
 }
 
 fn main() {
@@ -49,6 +68,6 @@ CrZsJsPPZsGzwwsLwLmpwMDw";
 
     #[test]
     fn part_two_works() {
-        assert_eq!(part_two(EXAMPLE), 0);
+        assert_eq!(part_two(EXAMPLE), 70);
     }
 }
