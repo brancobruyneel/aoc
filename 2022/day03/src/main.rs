@@ -4,19 +4,15 @@ fn part_one(input: &str) -> i16 {
         .map(|line| {
             let (left, right) = line.split_at(line.len() / 2);
 
-            left.chars()
-                .filter(|l| right.contains(*l))
-                .map(|l| {
-                    let byte = l as u8;
+            let common_type = left.chars().find(|l| right.contains(*l)).unwrap();
 
-                    if byte >= b'a' {
-                        (byte - b'a') as i16 + 1
-                    } else {
-                        (byte - b'A') as i16 + 27
-                    }
-                })
-                .next()
-                .unwrap()
+            let byte = common_type as u8;
+
+            if byte >= b'a' {
+                (byte - b'a') as i16 + 1
+            } else {
+                (byte - b'A') as i16 + 27
+            }
         })
         .sum::<i16>()
 }
