@@ -16,7 +16,7 @@ if ! grep -Eo "^session=[a-z0-9]+$" ./.cookie >/dev/null 2>&1; then
 	exit 1
 fi
 
-DIR="$YEAR/day$DAY"
+DIR="$YEAR/rust/src/bin/$DAY"
 
 mkdir -p $DIR
 

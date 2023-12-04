@@ -1,8 +1,4 @@
-fn part_one(input: &str) -> usize {
-    input
-        .lines()
-        .map(|line| {
-            let (left, right) = line.split_once(',').unwrap();
+fn parse(input: &str) -> Vec<(u8, u8, u8, u8)> {
 
             let ((left_lower, left_upper), (right_lower, right_upper)) = (
                 left.split_once('-').unwrap(),
@@ -16,8 +12,18 @@ fn part_one(input: &str) -> usize {
         .count()
 }
 
-fn part_two(input: &str) -> u32 {
-    0
+fn part_one(input: &str) -> usize {
+    parse(input)
+        .iter()
+        .filter(|(ll, lu, rl, ru)| (ll >= rl && lu <= ru) || (ll <= rl && lu >= ru))
+        .count()
+}
+
+fn part_two(input: &str) -> usize {
+    parse(input)
+        .iter()
+        .filter(|(ll, lu, rl, ru)| ll <= ru && rl <= lu)
+        .count()
 }
 
 fn main() {
@@ -36,6 +42,7 @@ mod tests {
 5-7,7-9
 2-8,3-7
 6-6,4-6
+<<<<<<< HEAD
 2-6,4-8";
 
     #[test]
@@ -45,6 +52,6 @@ mod tests {
 
     #[test]
     fn part_two_works() {
-        assert_eq!(part_two(EXAMPLE), 70);
+        assert_eq!(part_two(EXAMPLE), 4);
     }
 }
